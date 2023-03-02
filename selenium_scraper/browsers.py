@@ -1,16 +1,15 @@
 from typing import Type
 import logging
+import psutil
 from selenium import webdriver
-from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from selenium.webdriver.common.options import ArgOptions
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 class BaseScraper:
     """ Abstract scraper """
-    _browser: Type[RemoteWebDriver] = None
-    _browser_options: Type[ArgOptions] = None
+    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox] = None
+    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions] = None
 
     def __init__(self, *,
                  headless: bool = False,
@@ -54,6 +53,7 @@ class BaseScraper:
 
         self._driver = self._browser(options=browser_options)
         logging.info('Start driver')
+        self._driver_process = psutil.Process(self._driver.service.process.pid)
 
     @property
     def driver(self):
@@ -63,9 +63,30 @@ class BaseScraper:
     def __del__(self):
         """
         Close the driver to save the RAM
+
+        Selenium has some issues with closing the browser. Here's an attempt to kill
+        all driver processes, but need more debugging with different browsers
         """
+
+        if not self._driver_process.is_running():
+            logging.info('Driver has already been closed')
+            return
+
+        logging.info('Trying to quit driver')
+        process_children = self._driver_process.children()
         self._driver.quit()
-        logging.info('Quit driver')
+
+        for process in process_children:
+            if process.is_running():
+                process.kill()
+                logging.warning(f'Kill process {process}')
+
+        if not self._driver_process.is_running():
+            logging.info('Driver was closed successfully')
+            return
+
+        self._driver_process.kill()
+        logging.warning('Driver was killed')
 
 
 class ChromeScraper(BaseScraper):
