@@ -130,3 +130,4 @@ dmypy.json
 
 # user files
 /__debug/
+/.idea/
