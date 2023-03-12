@@ -1,3 +1,5 @@
 # scraper
 selenium~=4.8.2
 psutil~=5.9.4
+# tests
+pytest~=7.2.1
