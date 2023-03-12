@@ -3,3 +3,6 @@ selenium~=4.8.2
 psutil~=5.9.4
 # tests
 pytest~=7.2.1
+uvicorn~=0.20.0
+fastapi[all]~=0.92.0
+requests~=2.28.2
