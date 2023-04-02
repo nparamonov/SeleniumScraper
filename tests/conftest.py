@@ -1,8 +1,8 @@
 import pytest
-from selenium_scraper.scraper import Scraper
+from selenium_scraper import Scraper
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def scraper():
     """
     Scraper init
@@ -13,7 +13,7 @@ def scraper():
     return Scraper.chrome(headless=False)
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def base_url():
     """ Working API for tests from /tests/web_app/app.py """
     return 'http://127.0.0.1:8000'
