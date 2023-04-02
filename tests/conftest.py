@@ -1,5 +1,5 @@
 import pytest
-from selenium_scraper.scraper import Scraper
+from selenium_scraper import Scraper
 
 
 @pytest.fixture
