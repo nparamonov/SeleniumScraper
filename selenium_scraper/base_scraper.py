@@ -1,5 +1,4 @@
 from typing import Type
-import logging
 import psutil
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,8 +6,7 @@ from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 
 from .functions import update_url_params
-
-logging.basicConfig(level=logging.DEBUG)
+from .logger import logger
 
 
 class BaseScraper:
@@ -57,7 +55,9 @@ class BaseScraper:
             browser_options.add_argument(arguments_string)
 
         self._driver = self._browser(options=browser_options)
-        logging.info('Start driver')
+        logger.info(f'Start driver. '
+                    f'Browser: {self._driver.capabilities.get("browserName")}, '
+                    f'version: {self._driver.capabilities.get("browserVersion")}')
         self._driver_process = psutil.Process(self._driver.service.process.pid)
 
     @property
@@ -74,24 +74,24 @@ class BaseScraper:
         """
 
         if not self._driver_process.is_running():
-            logging.info('Driver has already been closed')
+            logger.info('Driver has already been closed')
             return
 
-        logging.info('Trying to quit driver')
+        logger.info('Trying to quit driver')
         process_children = self._driver_process.children()
         self._driver.quit()
 
         for process in process_children:
             if process.is_running():
                 process.kill()
-                logging.warning(f'Kill process {process}')
+                logger.warning(f'Kill process {process}')
 
         if not self._driver_process.is_running():
-            logging.info('Driver was closed successfully')
+            logger.info('Driver was closed successfully')
             return
 
         self._driver_process.kill()
-        logging.warning('Driver was killed')
+        logger.warning('Driver was killed')
 
     def get(self, url: str, params: dict | None = None):
         """
@@ -102,6 +102,7 @@ class BaseScraper:
         """
         url = update_url_params(url, params or {})
         self._driver.get(url)
+        logger.info(f'Load {url}')
 
     @property
     def current_page(self) -> BeautifulSoup:
@@ -134,6 +135,6 @@ class BaseScraper:
                     )
                 )
             except TimeoutException:
-                logging.warning(f'New content has not been loaded in {timeout} seconds')
+                logger.warning(f'New content has not been loaded in {timeout} seconds')
                 break
-        logging.info('Page has been scrolled down')
+        logger.info('Page has been scrolled down')
