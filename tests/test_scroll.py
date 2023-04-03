@@ -8,4 +8,3 @@ def test_scroll_infinite_page(scraper, base_url):
 
     paragraphs = scraper.current_page.find_all('div', {'class': 'paragraph'})
     assert len(paragraphs) - 1 == n_scrolls
-
