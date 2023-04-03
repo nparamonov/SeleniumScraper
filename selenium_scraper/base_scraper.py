@@ -11,8 +11,8 @@ from .logger import logger
 
 class BaseScraper:
     """ Abstract scraper """
-    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox] = None
-    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions] = None
+    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox]
+    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions]
 
     def __init__(self, *,
                  headless: bool = False,
@@ -55,9 +55,9 @@ class BaseScraper:
             browser_options.add_argument(arguments_string)
 
         self._driver = self._browser(options=browser_options)
-        logger.info(f'Start driver. '
-                    f'Browser: {self._driver.capabilities.get("browserName")}, '
-                    f'version: {self._driver.capabilities.get("browserVersion")}')
+        logger.info('Start driver. Browser: %s, version: %s',
+                    self._driver.capabilities.get("browserName"),
+                    self._driver.capabilities.get("browserVersion"))
         self._driver_process = psutil.Process(self._driver.service.process.pid)
 
     @property
@@ -84,7 +84,7 @@ class BaseScraper:
         for process in process_children:
             if process.is_running():
                 process.kill()
-                logger.warning(f'Kill process {process}')
+                logger.warning('Kill process %s', process)
 
         if not self._driver_process.is_running():
             logger.info('Driver was closed successfully')
@@ -102,7 +102,7 @@ class BaseScraper:
         """
         url = update_url_params(url, params or {})
         self._driver.get(url)
-        logger.info(f'Load {url}')
+        logger.info('Load %s', url)
 
     @property
     def current_page(self) -> BeautifulSoup:
@@ -135,6 +135,6 @@ class BaseScraper:
                     )
                 )
             except TimeoutException:
-                logger.warning(f'New content has not been loaded in {timeout} seconds')
+                logger.warning('New content has not been loaded in %f seconds', timeout)
                 break
         logger.info('Page has been scrolled down')

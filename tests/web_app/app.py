@@ -15,7 +15,7 @@ def ping():
 @app.get('/infinite_page')
 def infinite_page():
     """ Returns a page that adds content when scrolling down """
-    with open('templates/infinite_page.html') as html_file:
+    with open('templates/infinite_page.html', encoding='utf-8') as html_file:
         html_source = html_file.read()
     return responses.HTMLResponse(html_source)
 
