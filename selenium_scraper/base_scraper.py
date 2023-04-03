@@ -11,8 +11,8 @@ from .logger import logger
 
 class BaseScraper:
     """ Abstract scraper """
-    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox] = None
-    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions] = None
+    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox]
+    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions]
 
     def __init__(self, *,
                  headless: bool = False,
