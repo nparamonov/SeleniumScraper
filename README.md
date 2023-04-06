@@ -1,6 +1,9 @@
 # SeleniumScraper
 Tool to speed up writing Selenium parsers
 
+[![license](https://img.shields.io/github/license/nparamonov/SeleniumScraper)](https://github.com/nparamonov/SeleniumScraper/blob/main/LICENSE)
+[![pylint)](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pylint.yml?branch=main&label=pylint&logo=pylint)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml)
+
 ## Requirements
 - Python 3.10+
 - Internet connection
