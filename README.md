@@ -2,7 +2,8 @@
 Tool to speed up writing Selenium parsers
 
 [![license](https://img.shields.io/github/license/nparamonov/SeleniumScraper)](https://github.com/nparamonov/SeleniumScraper/blob/main/LICENSE)
-[![pylint)](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pylint.yml?branch=main&label=pylint&logo=pylint)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml)
+[![pylint](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pylint.yml?branch=main&label=pylint&logo=pylint)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml)
+[![pytest](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pytest.yml?branch=main&label=pytest&logo=pytest)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pytest.yml)
 
 ## Requirements
 - Python 3.10+

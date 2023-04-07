@@ -1,9 +1,13 @@
 """ Web application for tests """
 
+from pathlib import Path
 import uvicorn
 from fastapi import FastAPI, responses
 
 app = FastAPI()
+
+CURRENT_PATH = Path(__file__).absolute().parent
+TEMPLATES_PATH = Path(CURRENT_PATH, 'templates')
 
 
 @app.get('/ping')
@@ -15,7 +19,7 @@ def ping():
 @app.get('/infinite_page')
 def infinite_page():
     """ Returns a page that adds content when scrolling down """
-    with open('templates/infinite_page.html', encoding='utf-8') as html_file:
+    with open(Path(TEMPLATES_PATH, 'infinite_page.html'), encoding='utf-8') as html_file:
         html_source = html_file.read()
     return responses.HTMLResponse(html_source)
 
