@@ -1,5 +1,8 @@
+import logging
 import pytest
 from selenium_scraper import Scraper
+
+logging.basicConfig(level=logging.INFO)
 
 
 @pytest.fixture(scope='session')
@@ -10,7 +13,7 @@ def scraper():
     Here you can configure the browser you need.
     Note that the browser must be installed on the device.
     """
-    return Scraper.chrome(headless=False)
+    return Scraper.chrome(headless=True)
 
 
 @pytest.fixture(scope='session')
