@@ -57,7 +57,30 @@ Install the dependencies using `requirements.txt` file:
 ```shell
 pip install -r requirements.txt
 ```
+### Testing
+Before PR, you should check the tests and add/edit them if necessary.
 
+To test browser behavior, you need to run the local web application at `tests/web_app/app.py`.
+This allows you to write tests that do not depend on any resources, and at the same time customize them as needed.
+```shell
+python tests/web_app/app.py
+```
+SeleniumScraper uses Pytest package.
+```shell
+pytest -v
+```
+You can also check pytest pipeline on GitHub Actions:
+[pytest.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pytest.yml), 
+[pytest workflow](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pytest.yml).
+
+### Linting
+Also, before each PR it is recommended to analyze your code using pylint.
+```shell
+pylint selenium_scraper tests
+```
+You can also check pylint pipeline on GitHub Actions:
+[pylint.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pylint.yml), 
+[pylint workflow](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml).
 
 ## License
 This project is licensed under the terms of the Apache License 2.0.
