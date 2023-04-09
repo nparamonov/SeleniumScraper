@@ -1,12 +1,15 @@
 from typing import Type
 import psutil
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 
 from .functions import update_url_params
 from .logger import logger
+from .mapping import ScrollMethods
 
 
 class BaseScraper:
@@ -112,20 +115,56 @@ class BaseScraper:
         """
         return BeautifulSoup(self._driver.page_source, 'lxml')
 
-    def scroll_down(self, limit: int = 1, timeout: float = 5) -> None:
+    def scroll_down(self, method: str = ScrollMethods.end_key) -> None:
         """
-        Scroll current page down
+        Scroll current page down once. This is suitable for static pages
 
-        :param limit: number of scrolls
-        :param timeout: max waiting time (s)
+        :param method: way to scroll the page
 
-        If called without parameters (`limit` = 1), the page will scroll only 1 time. This is suitable for static
-        pages. For infinite pages, you can specify `limit` > 1 - the number of times the page will be scrolled down.
-        If no new content is loaded for more than `timeout` seconds, the loop will end
+        There are 3 ways to scroll the page down (`method`):
+
+        - ScrollMethods.js_instant: using javascript window.scrollTo with 'behavior: "instant"'.
+            This method scrolls the page immediately (as if teleporting us to the bottom of the page).
+            Pros: Highest speed.
+            Cons: Triggers for loading new content may not work on some pages.
+
+        - ScrollMethods.js_smooth: using javascript window.scrollTo with 'behavior: "smooth"'.
+            The problem of teleportation of the previous method is solved. Slower movement
+
+        - ScrollMethods.end_key: holding down the End key.
+            As in the previous method, the movement is smooth.
+            Most often 'js_smooth' and 'end_key' should be the same, but in case of some inaccuracies on some pages,
+            you can try to replace them.
+        """
+        if method == ScrollMethods.js_instant:
+            self._driver.execute_script(
+                'window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "instant"});'
+            )
+        elif method == ScrollMethods.js_smooth:
+            self._driver.execute_script(
+                'window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});'
+            )
+        elif method == ScrollMethods.end_key:
+            self._driver.find_element(By.TAG_NAME, 'html').send_keys(Keys.END)
+        else:
+            raise ValueError('Invalid page scroll method')
+        logger.info('Page has been scrolled down')
+
+    def scroll_infinite_page(self, limit: int = 3, timeout: float = 5, method: str = ScrollMethods.end_key) -> None:
+        """
+            Scroll current page down for `limit` times (for infinite pages)
+
+            :param limit: number of scrolls
+            :param timeout: max waiting time (s)
+            :param method: way to scroll the page
+
+            You can specify `limit` > 1 - the number of times the page will be scrolled down.
+            If no new content is loaded for more than `timeout` seconds, the loop will end.
+            Available scrolling methods can be found in the `BaseScraper.scroll_down` method.
         """
         while limit:
             last_height = self._driver.execute_script('return document.body.scrollHeight')
-            self._driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+            self.scroll_down(method)
             limit -= 1
             try:
                 wait = WebDriverWait(self._driver, timeout)
@@ -137,4 +176,3 @@ class BaseScraper:
             except TimeoutException:
                 logger.warning('New content has not been loaded in %f seconds', timeout)
                 break
-        logger.info('Page has been scrolled down')
