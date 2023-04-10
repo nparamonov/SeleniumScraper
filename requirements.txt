@@ -1,7 +1,7 @@
 # scraper
 selenium~=4.8.3
 psutil~=5.9.4
-beautifulsoup4~=4.12.1
+beautifulsoup4~=4.12.2
 lxml~=4.9.2
 # tests
 pytest~=7.2.2
