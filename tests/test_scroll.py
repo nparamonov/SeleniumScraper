@@ -1,3 +1,4 @@
+import timeit
 import pytest
 from selenium_scraper.mapping import ScrollMethods
 
@@ -42,3 +43,18 @@ def test_scroll_infinite_page_wrong_method(scraper, base_url):
     scraper.get(base_url + '/infinite_page')
     with pytest.raises(ValueError):
         scraper.scroll_infinite_page(n_scrolls, 2, 'my_method')
+
+
+def test_scroll_infinite_page_timeout_error(scraper, base_url):
+    """ Checks for scrolling down an infinite page which causes TimeoutException """
+    n_scrolls = 2
+    timeout = 2
+
+    scraper.get(base_url + '/ping')
+
+    s_t = timeit.default_timer()
+    scraper.scroll_infinite_page(n_scrolls, timeout)
+    e_t = timeit.default_timer()
+
+    duration = int(e_t - s_t)
+    assert duration == timeout

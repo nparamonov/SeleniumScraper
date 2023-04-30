@@ -6,3 +6,10 @@ def test_scraper_get_pong(scraper, base_url):
     scraper.get(base_url + '/ping')
     assert isinstance(scraper.current_page, BeautifulSoup)
     assert scraper.current_page.text == 'pong'
+
+
+def test_driver_get_pong(scraper, base_url):
+    """ Check direct access to the selenium web driver """
+    scraper.driver.get(base_url + '/ping')
+    assert isinstance(scraper.current_page, BeautifulSoup)
+    assert scraper.current_page.text == 'pong'
