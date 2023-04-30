@@ -16,10 +16,7 @@ def test_del_scraper_process_not_running(monkeypatch):
     """ Check that the exception does not occur if the process is already killed """
     monkeypatch.setattr(psutil.Process, 'is_running', lambda _: False)
     scraper = Scraper.chrome(headless=True)
-    try:
-        del scraper
-    except Exception:   # pylint: disable=broad-exception-caught
-        assert False
+    del scraper
 
 
 def test_del_scraper_process_running_no_children(monkeypatch):
