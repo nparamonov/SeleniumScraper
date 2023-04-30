@@ -18,7 +18,7 @@ def test_del_scraper_process_not_running(monkeypatch):
     scraper = Scraper.chrome(headless=True)
     try:
         del scraper
-    except Exception:
+    except Exception:   # pylint: disable=broad-exception-caught
         assert False
 
 
