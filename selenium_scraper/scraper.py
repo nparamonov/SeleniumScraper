@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 
-from .functions import update_url_params
+from .helpers.urls import update_url_params
 from .logger import logger
 from .mapping import ScrollMethods
 
