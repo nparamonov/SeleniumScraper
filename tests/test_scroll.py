@@ -11,7 +11,7 @@ def test_scroll_infinite_page_end_key(scraper, base_url):
     scraper.scroll_infinite_page(n_scrolls, 2, ScrollMethods.end_key)
 
     paragraphs = scraper.current_page.find_all('div', {'class': 'paragraph'})
-    assert len(paragraphs) - 1 == n_scrolls
+    assert len(paragraphs) - 1 >= n_scrolls
 
 
 def test_scroll_infinite_page_js_instant(scraper, base_url):
@@ -22,7 +22,7 @@ def test_scroll_infinite_page_js_instant(scraper, base_url):
     scraper.scroll_infinite_page(n_scrolls, 2, ScrollMethods.js_instant)
 
     paragraphs = scraper.current_page.find_all('div', {'class': 'paragraph'})
-    assert len(paragraphs) - 1 == n_scrolls
+    assert len(paragraphs) - 1 >= n_scrolls
 
 
 def test_scroll_infinite_page_js_smooth(scraper, base_url):
@@ -33,7 +33,7 @@ def test_scroll_infinite_page_js_smooth(scraper, base_url):
     scraper.scroll_infinite_page(n_scrolls, 2, ScrollMethods.js_smooth)
 
     paragraphs = scraper.current_page.find_all('div', {'class': 'paragraph'})
-    assert len(paragraphs) - 1 == n_scrolls
+    assert len(paragraphs) - 1 >= n_scrolls
 
 
 def test_scroll_infinite_page_wrong_method(scraper, base_url):

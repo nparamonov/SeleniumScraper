@@ -1,15 +1,21 @@
 from selenium import webdriver
 
-from .base_scraper import BaseScraper
+from .scraper import CommonScraper
 
 
-class ChromeScraper(BaseScraper):
+class ChromeScraper(CommonScraper):
     """ Chrome scraper """
     _browser = webdriver.Chrome
     _browser_options = webdriver.ChromeOptions
 
 
-class FirefoxScraper(BaseScraper):
-    """ Chrome scraper """
+class FirefoxScraper(CommonScraper):
+    """ Firefox scraper """
     _browser = webdriver.Firefox
     _browser_options = webdriver.FirefoxOptions
+
+
+class Scraper:
+    """ Scraper """
+    chrome = ChromeScraper
+    firefox = FirefoxScraper
