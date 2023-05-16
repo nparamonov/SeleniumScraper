@@ -7,7 +7,7 @@ lxml~=4.9.2
 pytest~=7.3.1
 uvicorn~=0.22.0
 fastapi[all]~=0.95.1
-requests~=2.29.0
+requests~=2.30.0
 # other
-pylint~=2.17.3
+pylint~=2.17.4
 coverage~=7.2.5
