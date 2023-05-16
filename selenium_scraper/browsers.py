@@ -1,6 +1,6 @@
 from selenium import webdriver
 
-from .base_scraper import CommonScraper
+from .scraper import CommonScraper
 
 
 class ChromeScraper(CommonScraper):
@@ -13,3 +13,9 @@ class FirefoxScraper(CommonScraper):
     """ Firefox scraper """
     _browser = webdriver.Firefox
     _browser_options = webdriver.FirefoxOptions
+
+
+class Scraper:
+    """ Scraper """
+    chrome = ChromeScraper
+    firefox = FirefoxScraper
