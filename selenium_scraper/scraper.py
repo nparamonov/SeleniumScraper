@@ -1,8 +1,7 @@
-from typing import Type
-from .browsers import ChromeScraper, FirefoxScraper, BaseScraper
+from .browsers import ChromeScraper, FirefoxScraper
 
 
 class Scraper:
     """ Scraper """
-    chrome: Type[BaseScraper] = ChromeScraper
-    firefox: Type[BaseScraper] = FirefoxScraper
+    chrome = ChromeScraper
+    firefox = FirefoxScraper

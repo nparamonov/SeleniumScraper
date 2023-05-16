@@ -63,11 +63,6 @@ class BaseScraper:
                     self._driver.capabilities.get("browserVersion"))
         self._driver_process = psutil.Process(self._driver.service.process.pid)
 
-    @property
-    def driver(self):
-        """ Access selenium web driver directly """
-        return self._driver
-
     def __del__(self):
         """
         Close the driver to save the RAM
@@ -96,6 +91,9 @@ class BaseScraper:
         self._driver_process.kill()
         logger.warning('Driver was killed')
 
+
+class CommonScraper(BaseScraper):
+    """ Scraper functionality for all browsers """
     def get(self, url: str, params: dict | None = None):
         """
         Load a web page in the current browser session
@@ -106,6 +104,11 @@ class BaseScraper:
         url = update_url_params(url, params or {})
         self._driver.get(url)
         logger.info('Load %s', url)
+
+    @property
+    def driver(self):
+        """ Access selenium web driver directly """
+        return self._driver
 
     @property
     def current_page(self) -> BeautifulSoup:
