@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 
-from .helpers.urls import update_url_params
+from .helpers.urls import update_url_params, PageLinks
 from .logger import logger
 from .mapping import ScrollMethods
 
@@ -179,3 +179,18 @@ class CommonScraper(BaseScraper):
             except TimeoutException:
                 logger.warning('New content has not been loaded in %f seconds', timeout)
                 break
+
+    def get_all_links(self, schemes: tuple[str] | None = PageLinks.default_schemes) -> PageLinks:
+        """
+        Get a helpers.urls.PageLinks object with all links on the current page
+        :param schemes: Schemes tuple by which links will be filtered.
+            If None, all links will be left. If specified, links with different schemes will be excluded
+            (e.g. ('ftp', 'http', 'https', 'ws', 'wss', 'git', 'git+ssh')). Default: ('http', 'https')
+        """
+        current_page_links = PageLinks(self._driver.current_url, schemes)
+
+        for link in self.current_page.find_all('a'):
+            raw_link = link.get('href')
+            current_page_links.add_link(raw_link)
+
+        return current_page_links
