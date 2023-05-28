@@ -10,6 +10,17 @@ CURRENT_PATH = Path(__file__).absolute().parent
 TEMPLATES_PATH = Path(CURRENT_PATH, 'templates')
 
 
+def html_response_from_file(file_name: str):
+    """
+    Returns HTML content
+    :param file_name: File name in folder `TEMPLATES_PATH`
+    :return: FastAPIs HTMLResponse
+    """
+    with open(Path(TEMPLATES_PATH, file_name), encoding='utf-8') as html_file:
+        html_source = html_file.read()
+    return responses.HTMLResponse(html_source)
+
+
 @app.get('/ping')
 def ping():
     """ Returns 'pong' in body to check if the API is working """
@@ -19,17 +30,13 @@ def ping():
 @app.get('/infinite_page')
 def infinite_page():
     """ Returns a page that adds content when scrolling down """
-    with open(Path(TEMPLATES_PATH, 'infinite_page.html'), encoding='utf-8') as html_file:
-        html_source = html_file.read()
-    return responses.HTMLResponse(html_source)
+    return html_response_from_file('infinite_page.html')
 
 
 @app.get('/page_with_various_links')
 def page_with_various_links():
     """ Returns a page with various links """
-    with open(Path(TEMPLATES_PATH, 'page_with_various_links.html'), encoding='utf-8') as html_file:
-        html_source = html_file.read()
-    return responses.HTMLResponse(html_source)
+    return html_response_from_file('page_with_various_links.html')
 
 
 if __name__ == '__main__':
