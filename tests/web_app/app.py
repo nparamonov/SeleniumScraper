@@ -24,5 +24,13 @@ def infinite_page():
     return responses.HTMLResponse(html_source)
 
 
+@app.get('/page_with_various_links')
+def page_with_various_links():
+    """ Returns a page with various links """
+    with open(Path(TEMPLATES_PATH, 'page_with_various_links.html'), encoding='utf-8') as html_file:
+        html_source = html_file.read()
+    return responses.HTMLResponse(html_source)
+
+
 if __name__ == '__main__':
     uvicorn.run('app:app', host='localhost', port=8000, reload=True)
