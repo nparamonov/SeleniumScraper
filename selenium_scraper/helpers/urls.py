@@ -52,6 +52,7 @@ class PageLinks:
     def add_link(self, raw_link: str) -> None:
         """
         Add and process a link
+
         :param raw_link: Original link from the page (e.g. '/nparamonov/SeleniumScraper',
             'https://github.com/nparamonov/SeleniumScraper#usage', '//github.com/nparamonov/SeleniumScraper',
             'javascript:void(0)', ...)
