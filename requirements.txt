@@ -6,7 +6,7 @@ lxml~=4.9.2
 # tests
 pytest~=7.3.2
 uvicorn~=0.22.0
-fastapi[all]~=0.97.0
+fastapi[all]~=0.98.0
 requests~=2.31.0
 # docs
 sphinx==7.0.1
