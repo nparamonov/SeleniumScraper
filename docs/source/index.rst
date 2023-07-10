@@ -17,9 +17,6 @@ SeleniumScraper
 .. |codecov| image:: https://img.shields.io/codecov/c/github/nparamonov/SeleniumScraper/main?label=coverage&logo=codecov&token=YZZ21OI7AG
    :target: https://codecov.io/gh/nparamonov/SeleniumScraper
 
-.. note::
-
-   This project is under active development.
 
 .. toctree::
     :hidden:
