@@ -94,14 +94,16 @@ class BaseScraper:
 
 class CommonScraper(BaseScraper):
     """ Scraper functionality for all browsers """
-    def get(self, url: str, params: dict | None = None):
+    def get(self, url: str, params: dict | None = None, timeout: float = 5.0):
         """
         Load a web page in the current browser session
 
         :param url: string of target URL
         :param params: dict containing query params for url
+        :param timeout: timeout (seconds)
         """
         url = update_url_params(url, params or {})
+        self._driver.set_page_load_timeout(timeout)
         self._driver.get(url)
         logger.info('Load %s', url)
 
