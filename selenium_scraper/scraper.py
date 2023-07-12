@@ -1,4 +1,5 @@
-from typing import Type
+from typing import Type, Union
+from abc import ABC, abstractmethod
 import psutil
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,10 +15,32 @@ from .logger import logger
 from .mapping import ScrollMethods
 
 
-class BaseScraper:
+# Unfortunately, selenium does not have a base class containing .service and .options attributes
+SupportedSeleniumWebDriver = Union[
+    Type[webdriver.Chrome],
+    Type[webdriver.Firefox],
+    Type[webdriver.Edge],
+    Type[webdriver.Ie],
+    Type[webdriver.Safari]
+]
+
+
+class BaseScraper(ABC):
     """ Abstract scraper """
-    _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox]
-    _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions]
+
+    @property
+    @abstractmethod
+    def _browser(self) -> SupportedSeleniumWebDriver:
+        """
+        Selenium webdriver class
+
+        Example:
+            from selenium import webdriver
+
+            class ChromeScraper(BaseScraper):
+                _browser = webdriver.Chrome
+        """
+        raise NotImplementedError
 
     def __init__(self,
                  options: Options = None,
@@ -65,7 +88,7 @@ class BaseScraper:
         logger.warning('Driver was killed')
 
 
-class CommonScraper(BaseScraper):
+class CommonScraper(BaseScraper, ABC):
     """ Scraper functionality for all browsers """
     def get(self, url: str, params: dict | None = None, timeout: float = 5.0):
         """
