@@ -40,7 +40,6 @@ class BaseScraper(ABC):
             class ChromeScraper(BaseScraper):
                 _browser = webdriver.Chrome
         """
-        raise NotImplementedError
 
     def __init__(self,
                  options: Options = None,
