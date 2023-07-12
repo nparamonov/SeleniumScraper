@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.options import ArgOptions as Options
+from selenium.webdriver.common.service import Service
 from bs4 import BeautifulSoup
 
 from .helpers.urls import update_url_params, PageLinks
@@ -17,47 +19,18 @@ class BaseScraper:
     _browser: Type[webdriver.Chrome] | Type[webdriver.Firefox]
     _browser_options: Type[webdriver.ChromeOptions] | Type[webdriver.FirefoxOptions]
 
-    def __init__(self, *,
-                 headless: bool = False,
-                 disable_dev_shm_usage: bool = False,
-                 no_sandbox: bool = False,
-                 args_string: str = ''
-                 ) -> None:
+    def __init__(self,
+                 options: Options = None,
+                 service: Service = None,
+                 keep_alive: bool = True) -> None:
         """
         Initialize driver for scraper
 
-        :param headless: ('--headless')
-            Do not open the browser so that it runs in the background
-        :param disable_dev_shm_usage: ('--disable-dev-shm-usage')
-            Write shared memory files into /tmp instead of /dev/shm.
-            /dev/shm is an implementation of the traditional shared memory concept.
-            The shared memory space is typically too small for Chrome and will cause Chrome to crash
-            when rendering large pages. In the past, the size of the shared memory had to be increased.
-            Since Chrome Version 65, this is no longer necessary.
-            Instead, launch the browser with the --disable-dev-shm-usageflag.
-            https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html
-        :param no_sandbox: ('--no-sandbox')
-            Disable sandbox - an additional feature from Chrome:
-            https://www.google.com/googlebooks/chrome/med_26.html
-        :param args_string:
-            A string of additional parameters for arguments not presented above,
-            e.g. '--disable-dev-shm-usage --no-sandbox'
+        :param options: instance of ChromeOptions or FirefoxOptions
+        :param service: service object for handling the browser driver if you need to pass extra details
+        :param keep_alive: whether to configure RemoteConnection to use HTTP keep-alive
         """
-
-        browser_options = self._browser_options()
-
-        arguments = [
-            '--headless' * headless,
-            '--disable-dev-shm-usage' * disable_dev_shm_usage,
-            '--no-sandbox' * no_sandbox,
-            args_string
-        ]
-        arguments_string = ' '.join(filter(None, arguments))
-
-        if arguments_string:
-            browser_options.add_argument(arguments_string)
-
-        self._driver = self._browser(options=browser_options)
+        self._driver = self._browser(options, service, keep_alive)
         logger.info('Start driver. Browser: %s, version: %s',
                     self._driver.capabilities.get("browserName"),
                     self._driver.capabilities.get("browserVersion"))
