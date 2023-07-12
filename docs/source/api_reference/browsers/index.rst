@@ -1,0 +1,7 @@
+Browsers
+========
+
+.. toctree::
+
+    chrome
+    firefox
