@@ -103,9 +103,3 @@ class FirefoxScraper(CommonScraper):
                 options.add_argument(argument)
 
         super().__init__(options, service, keep_alive)
-
-
-class Scraper:
-    """ Scraper """
-    chrome = ChromeScraper
-    firefox = FirefoxScraper
