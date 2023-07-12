@@ -158,6 +158,7 @@ class CommonScraper(BaseScraper):
     def get_all_links(self, schemes: tuple[str] | None = PageLinks.default_schemes) -> PageLinks:
         """
         Get a helpers.urls.PageLinks object with all links on the current page
+
         :param schemes: Schemes tuple by which links will be filtered.
             If None, all links will be left. If specified, links with different schemes will be excluded
             (e.g. ('ftp', 'http', 'https', 'ws', 'wss', 'git', 'git+ssh')). Default: ('http', 'https')
