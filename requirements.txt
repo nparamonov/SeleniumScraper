@@ -5,7 +5,7 @@ beautifulsoup4~=4.12.2
 lxml~=4.9.3
 # tests
 pytest~=7.4.0
-uvicorn~=0.22.0
+uvicorn~=0.23.0
 fastapi[all]~=0.100.0
 requests~=2.31.0
 # docs
