@@ -4,7 +4,7 @@ psutil~=5.9.5
 beautifulsoup4~=4.12.2
 lxml~=4.9.3
 # tests
-pytest~=7.4.0
+pytest~=7.4.1
 uvicorn~=0.23.2
 fastapi[all]~=0.103.1
 requests~=2.31.0
