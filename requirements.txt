@@ -1,17 +1,17 @@
 # scraper
-selenium~=4.11.2
+selenium~=4.12.0
 psutil~=5.9.5
 beautifulsoup4~=4.12.2
 lxml~=4.9.3
 # tests
-pytest~=7.4.0
+pytest~=7.4.1
 uvicorn~=0.23.2
-fastapi[all]~=0.101.0
+fastapi[all]~=0.103.1
 requests~=2.31.0
 # docs
-sphinx==7.1.2
+sphinx==7.2.5
 sphinx-copybutton==0.5.2
-furo==2023.7.26
+furo==2023.8.19
 # other
 pylint~=2.17.5
-coverage~=7.2.7
+coverage~=7.3.0
