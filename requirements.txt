@@ -14,4 +14,4 @@ sphinx-copybutton==0.5.2
 furo==2023.8.19
 # other
 pylint~=2.17.5
-coverage~=7.3.0
+coverage~=7.3.1
