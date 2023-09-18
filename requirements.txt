@@ -11,7 +11,7 @@ requests~=2.31.0
 # docs
 sphinx==7.2.6
 sphinx-copybutton==0.5.2
-furo==2023.8.19
+furo==2023.9.10
 # other
 pylint~=2.17.5
 coverage~=7.3.1
