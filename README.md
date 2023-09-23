@@ -43,20 +43,17 @@ Clone the repository and navigate to the project directory
 git clone https://github.com/nparamonov/SeleniumScraper.git
 cd SeleniumScraper
 ```
-Create a virtual environment:
+Install a poetry:
 ```shell
-python -m venv venv
+pip install poetry
+```
+Install packages:
+```shell
+poetry install
 ```
 Activate the virtual environment:
 ```shell
-# For Linux or macOS:
-source venv/bin/activate
-# For Windows:
-venv\Scripts\activate
-```
-Install the dependencies using `requirements.txt` file:
-```shell
-pip install -r requirements.txt
+poetry shell
 ```
 ### Testing
 Before PR, you should check the tests and add/edit them if necessary.
@@ -69,6 +66,10 @@ python tests/web_app/app.py
 SeleniumScraper uses Pytest package.
 ```shell
 pytest -v tests
+```
+or
+```shell
+poetry run pytest -v tests
 ```
 You can also check pytest pipeline on GitHub Actions:
 [pytest.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pytest.yml), 
@@ -85,11 +86,16 @@ coverage html
 ### Linting
 Also, before each PR it is recommended to analyze your code using pylint.
 ```shell
-pylint selenium_scraper tests
+ruff .
 ```
 You can also check pylint pipeline on GitHub Actions:
 [pylint.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pylint.yml), 
 [pylint workflow](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml).
+
+### Typing
+```shell
+mypy ./selenium_scraper ./tests
+```
 
 ## License
 This project is licensed under the terms of the Apache License 2.0.
