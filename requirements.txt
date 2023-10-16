@@ -1,5 +1,5 @@
 # scraper
-selenium~=4.12.0
+selenium~=4.14.0
 psutil~=5.9.5
 beautifulsoup4~=4.12.2
 lxml~=4.9.3
