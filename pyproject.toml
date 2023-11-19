@@ -20,7 +20,7 @@ pytest = "^7.4"
 uvicorn = "^0.23"
 fastapi = {version = "^0.100", extras = ["all"]}
 requests = "^2.31"
-coverage = "^7"
+coverage = {version = "^7", extras = ["toml"]}
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "7.0.1"
@@ -33,3 +33,11 @@ pylint = ">=2.17.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+command_line = "-m pytest tests -v"
+data_file = ".coverage/coverage"
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
