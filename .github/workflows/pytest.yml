@@ -36,10 +36,6 @@ jobs:
         python -m ensurepip
         python -m pip install --upgrade pip
         python -m pip install poetry==${{ matrix.poetry-version }}
-    
-    - name: Add Poetry to $PATH
-      run: |
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
 
     - name: Install dependencies
       run: |
@@ -63,6 +59,9 @@ jobs:
     - name: Coverage report
       run: |
         poetry run coverage report
+        poetry run coverage xml
     
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with:
+        directory: .coverage/
