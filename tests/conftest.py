@@ -1,5 +1,8 @@
 import logging
 import pytest
+import subprocess
+import time
+import sys
 from selenium_scraper import Scraper
 
 logging.basicConfig(level=logging.INFO)
@@ -20,3 +23,13 @@ def scraper(request):
 def base_url():
     """ Working API for tests from /tests/web_app/app.py """
     return 'http://127.0.0.1:8000'
+
+@pytest.fixture(scope="session", autouse=True)
+def start_web_app_process():
+    """Start local web application for tests"""
+    process = subprocess.Popen([sys.executable, "tests/web_app/app.py"])
+    time.sleep(5)
+    
+    yield
+
+    process.terminate()
