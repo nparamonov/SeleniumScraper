@@ -11,7 +11,7 @@ on:
       - develop
 
 jobs:
-  build:
+  pytest:
 
     strategy:
       matrix:
@@ -31,7 +31,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install poetry ${{ matrix.poetry-version }}
-      if: steps.cache-poetry.outputs.cache-hit != 'true'
       run: |
         python -m ensurepip
         python -m pip install --upgrade pip
