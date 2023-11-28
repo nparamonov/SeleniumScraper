@@ -1,10 +1,12 @@
+from typing import Any
+
 import psutil
 import pytest
 
 from selenium_scraper import Scraper
 
 
-def test_scraper_init_del():
+def test_scraper_init_del() -> None:
     """Check parser instance startup and shutdown."""
     scraper = Scraper.chrome(headless=True)
     process = scraper.driver.service.process.pid
@@ -13,14 +15,14 @@ def test_scraper_init_del():
         psutil.Process(process)
 
 
-def test_del_scraper_process_not_running(monkeypatch):
+def test_del_scraper_process_not_running(monkeypatch: pytest.MonkeyPatch) -> None:
     """Check that the exception does not occur if the process is already killed."""
     monkeypatch.setattr(psutil.Process, "is_running", lambda _: False)
     scraper = Scraper.chrome(headless=True)
     del scraper
 
 
-def test_del_scraper_process_running_no_children(monkeypatch):
+def test_del_scraper_process_running_no_children(monkeypatch: pytest.MonkeyPatch) -> None:
     """Check parser instance shutdown with no children processes."""
     monkeypatch.setattr(psutil.Process, "is_running", lambda _: True)
     monkeypatch.setattr(psutil.Process, "children", lambda *_args, **_kwargs: [])
@@ -33,11 +35,11 @@ def test_del_scraper_process_running_no_children(monkeypatch):
         psutil.Process(process)
 
 
-def test_del_scraper_process_running_children(monkeypatch):
+def test_del_scraper_process_running_children(monkeypatch: pytest.MonkeyPatch) -> None:
     """Check parser instance shutdown with `n_processes` children processes."""
     n_processes = 2
 
-    def mock_kill(*_args, **_kwargs):
+    def mock_kill(*_args: Any, **_kwargs: Any) -> None:
         nonlocal n_processes
         n_processes -= 1
 

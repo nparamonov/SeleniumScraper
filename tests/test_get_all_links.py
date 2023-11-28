@@ -1,4 +1,7 @@
-def test_get_links_from_current_page(scraper, base_url):
+from selenium_scraper import CommonScraper
+
+
+def test_get_links_from_current_page(scraper: CommonScraper, base_url: str) -> None:
     """Check page with various links."""
     scraper.get(base_url + "/page_with_various_links")
     links = scraper.get_all_links()
@@ -8,7 +11,7 @@ def test_get_links_from_current_page(scraper, base_url):
                               base_url + "/about", base_url + "/"}
 
 
-def test_get_links_from_page_without_links(scraper, base_url):
+def test_get_links_from_page_without_links(scraper: CommonScraper, base_url: str) -> None:
     """Check page without links."""
     scraper.get(base_url + "/ping")
     links = scraper.get_all_links()

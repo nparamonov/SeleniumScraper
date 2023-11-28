@@ -15,7 +15,8 @@ from .logger import logger
 from .mapping import ScrollMethods
 
 # Unfortunately, selenium does not have a base class containing .service and .options attributes
-SupportedSeleniumWebDriver = type[webdriver.Chrome] | type[webdriver.Firefox] | type[webdriver.Edge] | type[webdriver.Ie] | type[webdriver.Safari]
+SupportedSeleniumWebDriver = (type[webdriver.Chrome] | type[webdriver.Firefox] | type[webdriver.Edge] |
+                              type[webdriver.Ie] | type[webdriver.Safari])
 
 
 class BaseScraper(ABC):
@@ -34,9 +35,9 @@ class BaseScraper(ABC):
         """
 
     def __init__(self,
-                 options: Options = None,
-                 service: Service = None,
-                 keep_alive: bool = True) -> None:
+                 options: Options | None = None,
+                 service: Service | None = None,
+                 keep_alive: bool = True) -> None:  # noqa: FBT001, FBT002
         """Initialize driver for scraper.
 
         :param options: instance of ChromeOptions or FirefoxOptions
@@ -49,7 +50,7 @@ class BaseScraper(ABC):
                     self._driver.capabilities.get("browserVersion"))
         self._driver_process = psutil.Process(self._driver.service.process.pid)
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Close the driver to save the RAM.
 
         Selenium has some issues with closing the browser. Here's an attempt to kill
@@ -78,7 +79,7 @@ class BaseScraper(ABC):
 
 class CommonScraper(BaseScraper, ABC):
     """Scraper functionality for all browsers."""
-    def get(self, url: str, params: dict | None = None, timeout: float = 5.0):
+    def get(self, url: str, params: dict[str, str] | None = None, timeout: float = 5.0) -> None:
         """Load a web page in the current browser session.
 
         :param url: string of target URL
@@ -164,7 +165,7 @@ class CommonScraper(BaseScraper, ABC):
                 logger.warning("New content has not been loaded in %f seconds", timeout)
                 break
 
-    def get_all_links(self, schemes: tuple[str] | None = PageLinks.default_schemes) -> PageLinks:
+    def get_all_links(self, schemes: tuple[str, ...] | None = PageLinks.default_schemes) -> PageLinks:
         """Get a helpers.urls.PageLinks object with all links on the current page.
 
         :param schemes: Schemes tuple by which links will be filtered.

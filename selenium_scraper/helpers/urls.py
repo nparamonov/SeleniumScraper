@@ -3,7 +3,7 @@ from urllib import parse
 from selenium_scraper.logger import logger
 
 
-def update_url_params(url: str, params: dict) -> str:
+def update_url_params(url: str, params: dict[str, str]) -> str:
     """Add or update GET params to provided URL.
 
     :param url: string of target URL
@@ -25,7 +25,7 @@ class PageLinks:
 
     default_schemes = ("http", "https")
 
-    def __init__(self, page_url: str, schemes: tuple[str] | None = default_schemes):
+    def __init__(self, page_url: str, schemes: tuple[str, ...] | None = default_schemes):
         """Initialize PageLinks.
 
         :param page_url: Full URL of the page where the links are located
@@ -35,16 +35,16 @@ class PageLinks:
         """
         self._page = parse.urlparse(page_url)
         self._schemes = schemes
-        self._internal = set()
-        self._external = set()
+        self._internal: set[str] = set()
+        self._external: set[str] = set()
 
     @property
-    def internal(self) -> set:
+    def internal(self) -> set[str]:
         """Internal links (other pages on this site)."""
         return self._internal
 
     @property
-    def external(self) -> set:
+    def external(self) -> set[str]:
         """External links (other sites)."""
         return self._external
 

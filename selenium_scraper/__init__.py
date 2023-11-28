@@ -1,4 +1,5 @@
 from .browsers import ChromeScraper, FirefoxScraper
+from .scraper import CommonScraper
 
 
 class Scraper:

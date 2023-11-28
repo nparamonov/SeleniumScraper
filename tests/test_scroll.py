@@ -2,10 +2,11 @@ import timeit
 
 import pytest
 
+from selenium_scraper import CommonScraper
 from selenium_scraper.mapping import ScrollMethods
 
 
-def test_scroll_infinite_page_end_key(scraper, base_url):
+def test_scroll_infinite_page_end_key(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page with `end_key` method."""
     n_scrolls = 5
 
@@ -16,7 +17,7 @@ def test_scroll_infinite_page_end_key(scraper, base_url):
     assert len(paragraphs) - 1 >= n_scrolls
 
 
-def test_scroll_infinite_page_js_instant(scraper, base_url):
+def test_scroll_infinite_page_js_instant(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page with `js_instant` method."""
     n_scrolls = 5
 
@@ -27,7 +28,7 @@ def test_scroll_infinite_page_js_instant(scraper, base_url):
     assert len(paragraphs) - 1 >= n_scrolls
 
 
-def test_scroll_infinite_page_js_smooth(scraper, base_url):
+def test_scroll_infinite_page_js_smooth(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page with `js_smooth` method."""
     n_scrolls = 5
 
@@ -38,7 +39,7 @@ def test_scroll_infinite_page_js_smooth(scraper, base_url):
     assert len(paragraphs) - 1 >= n_scrolls
 
 
-def test_scroll_infinite_page_wrong_method(scraper, base_url):
+def test_scroll_infinite_page_wrong_method(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page with wrong method."""
     n_scrolls = 5
 
@@ -47,7 +48,7 @@ def test_scroll_infinite_page_wrong_method(scraper, base_url):
         scraper.scroll_infinite_page(n_scrolls, 2, "my_method")
 
 
-def test_scroll_infinite_page_timeout_error(scraper, base_url):
+def test_scroll_infinite_page_timeout_error(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page which causes TimeoutException."""
     n_scrolls = 2
     timeout = 2

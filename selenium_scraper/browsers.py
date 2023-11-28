@@ -12,10 +12,10 @@ class ChromeScraper(CommonScraper):
     _browser = webdriver.Chrome
     _browser_options = webdriver.ChromeOptions
 
-    def __init__(self,
-                 options: ChromeOptions = None,
-                 service: ChromeService = None,
-                 keep_alive: bool = True,
+    def __init__(self,  # noqa: PLR0913
+                 options: ChromeOptions | None = None,
+                 service: ChromeService | None = None,
+                 keep_alive: bool = True,  # noqa: FBT001, FBT002
                  *,
                  headless: bool = False,
                  disable_dev_shm_usage: bool = False,
@@ -72,9 +72,9 @@ class FirefoxScraper(CommonScraper):
     _browser_options = webdriver.FirefoxOptions
 
     def __init__(self,
-                 options: FirefoxOptions = None,
-                 service: FirefoxService = None,
-                 keep_alive: bool = True,
+                 options: FirefoxOptions | None = None,
+                 service: FirefoxService | None = None,
+                 keep_alive: bool = True,  # noqa: FBT001, FBT002
                  *,
                  headless: bool = False):
         """Initialize Firefox driver for scraper.

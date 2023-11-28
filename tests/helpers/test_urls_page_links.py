@@ -4,7 +4,7 @@ LINKS = ["/", "/", "/about", "page3", "javascript:void(0)", "https://github.com/
          "//github.com/nparamonov"]
 
 
-def test_links():
+def test_links() -> None:
     """Check the processing of various urls."""
     page_links = PageLinks("https://example.com/page1/page2")
     for link in LINKS:
