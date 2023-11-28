@@ -2,6 +2,6 @@ from .browsers import ChromeScraper, FirefoxScraper
 
 
 class Scraper:
-    """ Scraper """
+    """Scraper."""
     chrome = ChromeScraper
     firefox = FirefoxScraper

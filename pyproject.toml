@@ -125,10 +125,15 @@ ignore = [
     "D100", # undocumented-public-module
     "D104" # undocumented-public-package
 ]
+extend-exclude = [ "docs/source/conf.py"]
+namespace-packages = ["tests/web_app"]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"] # unused-import
-"tests*" = ["S101"] # assert
+"tests*" = [
+    "S101", # assert
+    "PLR2004" # magic-value-comparison
+]
 
 [tool.ruff.pydocstyle]
 convention = "google"

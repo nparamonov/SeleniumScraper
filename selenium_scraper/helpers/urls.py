@@ -1,11 +1,10 @@
 from urllib import parse
 
-from ..logger import logger
+from selenium_scraper.logger import logger
 
 
 def update_url_params(url: str, params: dict) -> str:
-    """
-    Add or update GET params to provided URL
+    """Add or update GET params to provided URL.
 
     :param url: string of target URL
     :param params: dict containing query params to be added or updated
@@ -18,17 +17,17 @@ def update_url_params(url: str, params: dict) -> str:
     query = dict(parse.parse_qsl(url_parts[4]))
     query.update(params)
     url_parts[4] = parse.urlencode(query)
-    url = parse.urlunparse(url_parts)
-    return url
+    return parse.urlunparse(url_parts)
 
 
 class PageLinks:
-    """ Internal and external links of the page """
+    """Internal and external links of the page."""
 
-    default_schemes = ('http', 'https')
+    default_schemes = ("http", "https")
 
     def __init__(self, page_url: str, schemes: tuple[str] | None = default_schemes):
-        """
+        """Initialize PageLinks.
+
         :param page_url: Full URL of the page where the links are located
         :param schemes: Schemes tuple by which links will be filtered.
             If None, all links will be left. If specified, links with different schemes will be excluded
@@ -41,17 +40,16 @@ class PageLinks:
 
     @property
     def internal(self) -> set:
-        """ Internal links (other pages on this site) """
+        """Internal links (other pages on this site)."""
         return self._internal
 
     @property
     def external(self) -> set:
-        """ External links (other sites) """
+        """External links (other sites)."""
         return self._external
 
     def add_link(self, raw_link: str) -> None:
-        """
-        Add and process a link
+        """Add and process a link.
 
         :param raw_link: Original link from the page (e.g. '/nparamonov/SeleniumScraper',
             'https://github.com/nparamonov/SeleniumScraper#usage', '//github.com/nparamonov/SeleniumScraper',
@@ -59,7 +57,7 @@ class PageLinks:
         """
         parsed_url = parse.urlparse(raw_link)
 
-        if self._schemes and parsed_url.scheme not in self._schemes + ('',):
+        if self._schemes and parsed_url.scheme not in (*self._schemes, ""):
             logger.debug('Link "%s" skipped: wrong scheme', raw_link)
             return
 
@@ -76,7 +74,7 @@ class PageLinks:
             parsed_url = parsed_url._replace(
                 netloc=self._page.netloc,
                 scheme=self._page.scheme,
-                path=parse.urljoin(self._page.path, parsed_url.path)
+                path=parse.urljoin(self._page.path, parsed_url.path),
             )
             restored_url = parse.urlunparse(parsed_url)
             logger.debug('Link "%s" is internal', restored_url)
