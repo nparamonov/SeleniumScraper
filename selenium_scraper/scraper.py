@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from functools import partial
 
 import psutil
 from bs4 import BeautifulSoup
@@ -156,9 +157,11 @@ class CommonScraper(BaseScraper, ABC):
             limit -= 1
             try:
                 wait = WebDriverWait(self._driver, timeout)
+                js_wait_condition = f"return document.body.scrollHeight > {last_height}"
                 wait.until(
-                    lambda driver: driver.execute_script(
-                        f"return document.body.scrollHeight > {last_height}",
+                    partial(
+                        lambda driver, wait_condition: driver.execute_script(wait_condition),
+                        wait_condition=js_wait_condition,
                     ),
                 )
             except TimeoutException:
