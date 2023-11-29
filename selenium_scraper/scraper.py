@@ -16,8 +16,9 @@ from .logger import logger
 from .mapping import ScrollMethods
 
 # Unfortunately, selenium does not have a base class containing .service and .options attributes
-SupportedSeleniumWebDriver = (type[webdriver.Chrome] | type[webdriver.Firefox] | type[webdriver.Edge] |
+SupportedSeleniumWebDriverTypes = (type[webdriver.Chrome] | type[webdriver.Firefox] | type[webdriver.Edge] |
                               type[webdriver.Ie] | type[webdriver.Safari])
+SupportedSeleniumWebDriver = (webdriver.Chrome | webdriver.Firefox | webdriver.Edge | webdriver.Ie | webdriver.Safari)
 
 
 class BaseScraper(ABC):
@@ -25,7 +26,7 @@ class BaseScraper(ABC):
 
     @property
     @abstractmethod
-    def _browser(self) -> SupportedSeleniumWebDriver:
+    def _browser(self) -> SupportedSeleniumWebDriverTypes:
         """Selenium webdriver class.
 
         Example:
@@ -45,7 +46,7 @@ class BaseScraper(ABC):
         :param service: service object for handling the browser driver if you need to pass extra details
         :param keep_alive: whether to configure RemoteConnection to use HTTP keep-alive
         """
-        self._driver = self._browser(options, service, keep_alive)
+        self._driver = self._browser(options=options, service=service, keep_alive=keep_alive) # type: ignore[arg-type]
         logger.info("Start driver. Browser: %s, version: %s",
                     self._driver.capabilities.get("browserName"),
                     self._driver.capabilities.get("browserVersion"))
@@ -93,7 +94,7 @@ class CommonScraper(BaseScraper, ABC):
         logger.info("Load %s", url)
 
     @property
-    def driver(self):
+    def driver(self) -> SupportedSeleniumWebDriver:
         """Access selenium web driver directly."""
         return self._driver
 
