@@ -4,6 +4,8 @@ Tool to speed up writing Selenium parsers
 [![license](https://img.shields.io/github/license/nparamonov/SeleniumScraper)](https://github.com/nparamonov/SeleniumScraper/blob/main/LICENSE)
 [![pytest](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pytest.yml?branch=main&label=pytest&logo=pytest)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pytest.yml)
 [![codecov](https://img.shields.io/codecov/c/github/nparamonov/SeleniumScraper/main?label=coverage&logo=codecov&token=YZZ21OI7AG)](https://codecov.io/gh/nparamonov/SeleniumScraper)
+[![mypy](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/mypy.yml?branch=main&label=mypy&logo=python)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/mypy.yml)
+[![ruff](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/ruff.yml?branch=main&label=ruff&logo=ruff)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/ruff.yml)
 
 ## Requirements
 - Python 3.10+
