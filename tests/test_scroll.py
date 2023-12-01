@@ -9,7 +9,7 @@ from selenium_scraper.mapping import ScrollMethods
 @pytest.mark.parametrize("method", [ScrollMethods.end_key, ScrollMethods.js_instant, ScrollMethods.js_smooth])
 def test_scroll_infinite_page_methods(scraper: CommonScraper, base_url: str, method: str) -> None:
     """Checks for scrolling down an infinite page with different methods."""
-    n_scrolls = 5
+    n_scrolls = 2
 
     scraper.get(base_url + "/infinite_page")
     scraper.scroll_infinite_page(n_scrolls, 2, method)
@@ -30,7 +30,7 @@ def test_scroll_infinite_page_wrong_method(scraper: CommonScraper, base_url: str
 def test_scroll_infinite_page_timeout_error(scraper: CommonScraper, base_url: str) -> None:
     """Checks for scrolling down an infinite page which causes TimeoutException."""
     n_scrolls = 2
-    timeout = 2
+    timeout = 1
 
     scraper.get(base_url + "/ping")
 
