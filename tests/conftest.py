@@ -1,6 +1,7 @@
 import logging
 import subprocess
 import sys
+import timeit
 from collections.abc import Generator
 from typing import Any
 
@@ -35,13 +36,12 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
 
     Execute script `tests/web_app/app.py` while the tests are running.
     Poll the API in a loop to run tests only when the application is ready.
-    If we were unable to get a response within 10 attempts with a timeout of 0.5 seconds
-    (approximately 5 seconds), we terminate the test session with an error.
+    If we were unable to get a response within 5 seconds, we terminate the test session with an error.
     """
     process = subprocess.Popen(args=[sys.executable, "-u", "tests/web_app/app.py"],
                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8")
-
-    for _ in range(10):
+    start_time = timeit.default_timer()
+    while timeit.default_timer() - start_time < 5:
         try:
             response = requests.get(base_url + "/ping", timeout=0.5)
         except requests.exceptions.RequestException:
@@ -56,5 +56,7 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
         logger.error("Web app output:\n---\n%s\n---", lines)
         pytest.exit("Local web application for tests was not launched", returncode=2)
 
-    yield
-    process.terminate()
+    try:
+        yield
+    finally:
+        process.terminate()
