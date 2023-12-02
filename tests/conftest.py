@@ -52,7 +52,5 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
         process.terminate()
         pytest.exit("Local web application for tests was not launched", returncode=1)
 
-    try:
-        yield
-    finally:
-        process.terminate()
+    yield
+    process.terminate()
