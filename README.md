@@ -2,9 +2,10 @@
 Tool to speed up writing Selenium parsers
 
 [![license](https://img.shields.io/github/license/nparamonov/SeleniumScraper)](https://github.com/nparamonov/SeleniumScraper/blob/main/LICENSE)
-[![pylint](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pylint.yml?branch=main&label=pylint&logo=pylint)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml)
 [![pytest](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/pytest.yml?branch=main&label=pytest&logo=pytest)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pytest.yml)
 [![codecov](https://img.shields.io/codecov/c/github/nparamonov/SeleniumScraper/main?label=coverage&logo=codecov&token=YZZ21OI7AG)](https://codecov.io/gh/nparamonov/SeleniumScraper)
+[![mypy](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/mypy.yml?branch=main&label=mypy&logo=python)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/mypy.yml)
+[![ruff](https://img.shields.io/github/actions/workflow/status/nparamonov/SeleniumScraper/ruff.yml?branch=main&label=ruff&logo=ruff)](https://github.com/nparamonov/SeleniumScraper/actions/workflows/ruff.yml)
 
 ## Requirements
 - Python 3.10+
@@ -13,9 +14,6 @@ Tool to speed up writing Selenium parsers
 
 ## Installation
 ### Installing with PyPI
-...
-
-### Installing from the source
 ...
 
 ## Usage
@@ -43,33 +41,29 @@ Clone the repository and navigate to the project directory
 git clone https://github.com/nparamonov/SeleniumScraper.git
 cd SeleniumScraper
 ```
-Create a virtual environment:
+Install Poetry (https://python-poetry.org/docs/#installation), e.g.:
 ```shell
-python -m venv venv
+pip install poetry
+```
+Install the dependencies:
+```shell
+poetry install
 ```
 Activate the virtual environment:
 ```shell
-# For Linux or macOS:
-source venv/bin/activate
-# For Windows:
-venv\Scripts\activate
+poetry shell
 ```
-Install the dependencies using `requirements.txt` file:
-```shell
-pip install -r requirements.txt
-```
+
 ### Testing
 Before PR, you should check the tests and add/edit them if necessary.
 
-To test browser behavior, you need to run the local web application at `tests/web_app/app.py`.
-This allows you to write tests that do not depend on any resources, and at the same time customize them as needed.
-```shell
-python tests/web_app/app.py
-```
 SeleniumScraper uses Pytest package.
 ```shell
 pytest -v tests
 ```
+
+Note that in order to successfully pass the tests, you must have Chrome and Firefox browsers installed on your machine.
+
 You can also check pytest pipeline on GitHub Actions:
 [pytest.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pytest.yml), 
 [pytest workflow](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pytest.yml).
@@ -77,19 +71,10 @@ You can also check pytest pipeline on GitHub Actions:
 #### Coverage
 Check code coverage
 ```shell
-coverage run -m pytest -v tests
-coverage report -m
+coverage run
+coverage report
 coverage html
 ```
-
-### Linting
-Also, before each PR it is recommended to analyze your code using pylint.
-```shell
-pylint selenium_scraper tests
-```
-You can also check pylint pipeline on GitHub Actions:
-[pylint.yml](https://github.com/nparamonov/SeleniumScraper/blob/main/.github/workflows/pylint.yml), 
-[pylint workflow](https://github.com/nparamonov/SeleniumScraper/actions/workflows/pylint.yml).
 
 ## License
 This project is licensed under the terms of the Apache License 2.0.

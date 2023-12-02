@@ -8,22 +8,21 @@ from .scraper import CommonScraper
 
 
 class ChromeScraper(CommonScraper):
-    """ Chrome scraper """
+    """Chrome scraper."""
     _browser = webdriver.Chrome
     _browser_options = webdriver.ChromeOptions
 
-    def __init__(self,
-                 options: ChromeOptions = None,
-                 service: ChromeService = None,
-                 keep_alive: bool = True,
+    def __init__(self,  # noqa: PLR0913
+                 options: ChromeOptions | None = None,
+                 service: ChromeService | None = None,
+                 keep_alive: bool = True,  # noqa: FBT001, FBT002
                  *,
                  headless: bool = False,
                  disable_dev_shm_usage: bool = False,
                  no_sandbox: bool = True,
                  no_default_browser_check: bool = True,
                  no_first_run: bool = True):
-        """
-        Initialize Chrome driver for scraper
+        """Initialize Chrome driver for scraper.
 
         :param options: instance of ChromeOptions
         :param service: service object for handling the browser driver if you need to pass extra details
@@ -48,17 +47,17 @@ class ChromeScraper(CommonScraper):
         :param no_default_browser_check: ('--no-default-browser-check')
             Disables the default browser check to avoid having the default browser info-bar displayed
         :param no_first_run: ('--no-first-run')
-            Skip First Run tasks, whether or not it’s actually the First Run
+            Skip First Run tasks, whether or not it`s actually the First Run
         """
         if not options:
             options = self._browser_options()
 
         arguments = {
-            '--headless': headless,
-            '--disable-dev-shm-usage': disable_dev_shm_usage,
-            '--no-sandbox': no_sandbox,
-            '--no-default-browser-check': no_default_browser_check,
-            '--no-first-run': no_first_run,
+            "--headless": headless,
+            "--disable-dev-shm-usage": disable_dev_shm_usage,
+            "--no-sandbox": no_sandbox,
+            "--no-default-browser-check": no_default_browser_check,
+            "--no-first-run": no_first_run,
         }
         for argument, enabled in arguments.items():
             if enabled and argument not in options.arguments:
@@ -68,18 +67,17 @@ class ChromeScraper(CommonScraper):
 
 
 class FirefoxScraper(CommonScraper):
-    """ Firefox scraper """
+    """Firefox scraper."""
     _browser = webdriver.Firefox
     _browser_options = webdriver.FirefoxOptions
 
     def __init__(self,
-                 options: FirefoxOptions = None,
-                 service: FirefoxService = None,
-                 keep_alive: bool = True,
+                 options: FirefoxOptions | None = None,
+                 service: FirefoxService | None = None,
+                 keep_alive: bool = True,  # noqa: FBT001, FBT002
                  *,
                  headless: bool = False):
-        """
-        Initialize Firefox driver for scraper
+        """Initialize Firefox driver for scraper.
 
         :param options: instance of FirefoxOptions
         :param service: service object for handling the browser driver if you need to pass extra details
@@ -96,7 +94,7 @@ class FirefoxScraper(CommonScraper):
             options = self._browser_options()
 
         arguments = {
-            '-headless': headless,
+            "-headless": headless,
         }
         for argument, enabled in arguments.items():
             if enabled and argument not in options.arguments:

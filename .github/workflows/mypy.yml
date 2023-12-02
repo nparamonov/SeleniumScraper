@@ -1,0 +1,34 @@
+name: mypy
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install poetry 1.7.1
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade pip
+        python -m pip install poetry==1.7.1
+
+    - name: Install dependencies
+      run: |
+        poetry install
+    
+    - name: Check types with mypy
+      run: |
+        poetry run mypy .

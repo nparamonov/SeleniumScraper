@@ -1,44 +1,66 @@
 name: pytest
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  pytest:
+
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10"]  # ["3.10", "3.11"]
+        poetry-version: [1.7.1]
+        os: ["ubuntu-latest"] # ["ubuntu-latest", "windows-latest"] - Disabled to save limits
+
+    runs-on: ${{ matrix.os }}
+
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Install poetry ${{ matrix.poetry-version }}
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade pip
+        python -m pip install poetry==${{ matrix.poetry-version }}
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        poetry install
+    
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: stable
+    
     - name: Setup Firefox
       uses: abhi1693/setup-browser@v0.3.5
       with:
         browser: firefox
         version: latest
-    - name: Start local web application for tests
-      run: |
-        echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
-        nohup python tests/web_app/app.py &
-    - name: Delay before running tests
-      run: |
-        sleep 5
+    
     - name: Run tests
       run: |
-        coverage run -m pytest tests -v
+        poetry run coverage run
+    
     - name: Coverage report
       run: |
-        coverage report --show-missing
+        poetry run coverage report
+        poetry run coverage xml
+    
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with:
+        directory: .coverage/
