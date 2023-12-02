@@ -10,6 +10,7 @@ import requests
 from selenium_scraper import CommonScraper, Scraper
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @pytest.fixture(scope="session", params=[Scraper.chrome, Scraper.firefox])
@@ -37,7 +38,8 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
     If we were unable to get a response within 10 attempts with a timeout of 0.5 seconds
     (approximately 5 seconds), we terminate the test session with an error.
     """
-    process = subprocess.Popen([sys.executable, "tests/web_app/app.py"])  # noqa: S603
+    process = subprocess.Popen(args=[sys.executable, "-u", "tests/web_app/app.py"],
+                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8")
 
     for _ in range(10):
         try:
@@ -50,6 +52,8 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
 
     else:
         process.terminate()
+        lines = process.communicate(timeout=1)[0]
+        logger.error("Web app output:\n---\n%s\n---", lines)
         pytest.exit("Local web application for tests was not launched", returncode=2)
 
     yield

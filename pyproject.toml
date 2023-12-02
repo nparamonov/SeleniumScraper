@@ -38,6 +38,9 @@ ruff = "0.1.6"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.pytest.ini_options]
+log_cli = true
+
 [tool.coverage.run]
 command_line = "-m pytest tests -v"
 data_file = ".coverage/coverage"
