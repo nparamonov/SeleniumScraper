@@ -42,7 +42,7 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
     for _ in range(10):
         try:
             response = requests.get(base_url + "/ping", timeout=0.5)
-        except requests.exceptions.Timeout:
+        except requests.exceptions.RequestException:
             continue
 
         if response.text == "pong":
@@ -50,7 +50,7 @@ def _start_web_app_process(base_url: str) -> Generator[None, Any, None]:
 
     else:
         process.terminate()
-        pytest.exit("Local web application for tests was not launched", returncode=1)
+        pytest.exit("Local web application for tests was not launched", returncode=2)
 
     yield
     process.terminate()
