@@ -27,7 +27,7 @@ requests = "^2.31"
 coverage = {version = "^7", extras = ["toml"]}
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "7.0.1"
+sphinx = "7.2.6"
 sphinx-copybutton = "0.5.2"
 furo = "2023.5.20"
 
