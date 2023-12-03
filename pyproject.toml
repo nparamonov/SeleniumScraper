@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "selenium_scraper"
 version = "0.1.0"
@@ -21,9 +25,6 @@ uvicorn = "^0.23"
 fastapi = {version = "^0.100", extras = ["all"]}
 requests = "^2.31"
 coverage = {version = "^7", extras = ["toml"]}
-types-requests = "^2.31.0.10"
-types-psutil = "^5.9.5.17"
-types-beautifulsoup4 = "^4.12.0.7"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "7.0.1"
@@ -33,10 +34,9 @@ furo = "2023.5.20"
 [tool.poetry.group.linters.dependencies]
 mypy = "1.7.1"
 ruff = "0.1.6"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+types-requests = "^2.31.0.10"
+types-psutil = "^5.9.5.17"
+types-beautifulsoup4 = "^4.12.0.7"
 
 [tool.pytest.ini_options]
 log_cli = true
