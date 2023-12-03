@@ -22,7 +22,7 @@ lxml = "^4.9"
 [tool.poetry.group.tests.dependencies]
 pytest = "^7.4"
 uvicorn = "^0.23"
-fastapi = {version = "^0.100", extras = ["all"]}
+fastapi = {version = "^0.104", extras = ["all"]}
 requests = "^2.31"
 coverage = {version = "^7", extras = ["toml"]}
 
