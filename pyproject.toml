@@ -17,7 +17,7 @@ python = "^3.10"
 selenium = "^4.15"
 psutil = "^5.9"
 beautifulsoup4 = "^4.12"
-lxml = "^4.9"
+lxml = "^5.0"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^7.4"
