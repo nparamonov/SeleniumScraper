@@ -29,7 +29,7 @@ coverage = {version = "^7", extras = ["toml"]}
 [tool.poetry.group.docs.dependencies]
 sphinx = "7.2.6"
 sphinx-copybutton = "0.5.2"
-furo = "2023.9.10"
+furo = "2024.1.29"
 
 [tool.poetry.group.linters.dependencies]
 mypy = "1.8.0"
