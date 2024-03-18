@@ -33,7 +33,7 @@ furo = "2023.9.10"
 
 [tool.poetry.group.linters.dependencies]
 mypy = "1.8.0"
-ruff = "0.1.6"
+ruff = "0.3.3"
 types-requests = "^2.31.0.10"
 types-psutil = "^5.9.5.17"
 types-beautifulsoup4 = "^4.12.0.7"
