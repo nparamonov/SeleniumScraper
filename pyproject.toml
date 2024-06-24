@@ -15,7 +15,7 @@ repository = "https://github.com/nparamonov/SeleniumScraper"
 [tool.poetry.dependencies]
 python = "^3.10"
 selenium = "^4.15"
-psutil = "^5.9"
+psutil = "^6.0"
 beautifulsoup4 = "^4.12"
 lxml = "^5.1"
 
