@@ -32,7 +32,7 @@ sphinx-copybutton = "0.5.2"
 furo = "2024.5.6"
 
 [tool.poetry.group.linters.dependencies]
-mypy = "1.10.0"
+mypy = "1.11.0"
 ruff = "0.4.4"
 types-requests = "^2.31.0.10"
 types-psutil = "^5.9.5.17"
